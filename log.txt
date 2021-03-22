@@ -1,0 +1,76 @@
+NAME                            READY   STATUS      RESTARTS   AGE
+k8crdb-cockroachdb-0            1/1     Running     0          4d19h
+k8crdb-cockroachdb-1            1/1     Running     0          7m15s
+k8crdb-cockroachdb-2            1/1     Running     0          4d19h
+Beginning phase 1
+DELETING NODE
+STATUS
+NAME                            READY   STATUS      RESTARTS   AGE
+k8crdb-cockroachdb-0            1/1     Running     0          4d19h
+k8crdb-cockroachdb-1            1/1     Running     0          7m17s
+k8crdb-cockroachdb-2            1/1     Running     0          4d19h
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+STATUS
+INSERTING 500 ROWS
+NAME                            READY   STATUS      RESTARTS   AGE
+k8crdb-cockroachdb-0            1/1     Running     0          4d19h
+k8crdb-cockroachdb-1            1/1     Running     0          7m22s
+k8crdb-cockroachdb-2            1/1     Running     0          4d19h
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 1000
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 1500
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 2000
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 2500
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 3000
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 3500
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 4000
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 4500
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 5000
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 5500
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 6000
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 6500
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 7000
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 7500
+INSERTING 500 ROWS
+DONE INSERTING 500 ROWS
+NR OF ROWS INSERTED: 8000
+ALL ROWS INSERTED
+STATUS
+NAME                            READY   STATUS      RESTARTS   AGE
+k8crdb-cockroachdb-0            1/1     Running     0          4d19h
+k8crdb-cockroachdb-1            1/1     Running     0          8m19s
+k8crdb-cockroachdb-2            1/1     Running     0          4d19h
+COUNTING ROWS
+count_rows
+7500
+Check id = 7001
+count_rows
+7001
+End of phase one

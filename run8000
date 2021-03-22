@@ -1,0 +1,62 @@
+#!/bin/bash
+
+#Create logfile
+rm -rf log.txt
+touch log.txt
+
+#Copy create + insert to node
+cat create.sql | kubectl exec -i -n thesis-crdb service/k8crdb-cockroachdb-public -- bash -c "cat > create.sql"
+cat insert.sql | kubectl exec -i -n thesis-crdb service/k8crdb-cockroachdb-public -- bash -c "cat > insert.sql"
+
+#Check status of nodes
+kubectl get pods -n thesis-crdb | grep 'cockroachdb-0\|cockroachdb-1\|cockroachdb-2\|NAME' >> log.txt
+
+#Create table in node
+kubectl exec -i -n thesis-crdb service/k8crdb-cockroachdb-public -- bash -c "cat create.sql | cockroach sql --insecure"
+
+echo "Beginning phase 1" >> log.txt
+
+echo "DELETING NODE" >> log.txt
+#Stop node
+kubectl delete pod/k8crdb-cockroachdb-1 -n thesis-crdb >> log.txt
+
+#Check status of nodes
+echo "STATUS" >> log.txt
+kubectl get pods -n thesis-crdb | grep 'cockroachdb-0\|cockroachdb-1\|cockroachdb-2\|NAME' >> log.txt
+
+echo "INSERTING 500 ROWS" >> log.txt
+#run insert.sql in node (insert rows)
+kubectl exec -i -n thesis-crdb service/k8crdb-cockroachdb-public -- bash -c "cat insert.sql | cockroach sql --insecure"
+echo "DONE INSERTING 500 ROWS" >> log.txt
+
+#Check status of nodes
+echo "STATUS" >> log.txt
+kubectl get pods -n thesis-crdb | grep 'cockroachdb-0\|cockroachdb-1\|cockroachdb-2\|NAME' >> log.txt &
+
+#Insert rows
+for i in {1..15}
+do
+    echo "INSERTING 500 ROWS" >> log.txt
+  
+    #run insert.sql in node (insert rows)
+    kubectl exec -i -n thesis-crdb service/k8crdb-cockroachdb-public -- bash -c "cat insert.sql | cockroach sql --insecure"
+    echo "DONE INSERTING 500 ROWS" >> log.txt
+  
+    echo "NR OF ROWS INSERTED: $((500*i+500))" >> log.txt
+done
+
+
+echo "ALL ROWS INSERTED" >> log.txt
+
+echo "STATUS" >> log.txt
+#Check status of nodes
+kubectl get pods -n thesis-crdb | grep 'cockroachdb-0\|cockroachdb-1\|cockroachdb-2\|NAME' >> log.txt
+
+echo "COUNTING ROWS" >> log.txt
+#Count nr of inserted rows and save in log.txt
+kubectl exec -i -n thesis-crdb service/k8crdb-cockroachdb-public -- bash -c "cockroach sql --insecure --execute='select count_rows() from student;'" >> log.txt
+
+echo "Check id = 7001" >> log.txt
+kubectl exec -i -n thesis-crdb service/k8crdb-cockroachdb-public -- bash -c "cockroach sql --insecure --execute='select count_rows() from student where id <= 7001 ;'" >> log.txt
+
+echo "End of phase one" >> log.txt
